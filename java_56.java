@@ -1,0 +1,82 @@
+// A static method is not assosiated to obj but to interface/class
+
+interface MyCamera {
+    void takeSnap();
+    void recordVideo();
+
+    /*Why a private method is created as it can't be accesed anywhere (main/class)
+     * If the implementation of default method became large it can be 
+     * used to de-clutter the mess
+     */
+    private void greet()  
+    {
+        System.out.println("Good Morning");
+    }
+
+    /*Why default method are used? To add a feature to the program that
+     * are using the interface and simulatneously not adding to each classes
+     */
+    default void record4KVideo() {
+        greet();
+        System.out.println("Recording in 4k...");
+    }
+}
+
+interface MyWifi {
+    String[] getNetworks();
+
+    void connectToNetwork(String network);
+}
+
+class MyCellPhone {
+    void callNumber(int phoneNumber) {
+        System.out.println("Calling " + phoneNumber);
+    }
+
+    void pickCall() {
+        System.out.println("Connecting... ");
+    }
+
+}
+
+
+// Complete example of Interface and why to use it
+class MySmartPhone extends MyCellPhone implements MyWifi, MyCamera {
+    public void takeSnap() {
+        System.out.println("Taking snap");
+    }
+
+    public void recordVideo() {
+        System.out.println("Taking snap");
+    }
+
+    // -> Default Methods can be overridden
+    // public void record4KVideo(){
+    // System.out.println("Taking snap and recoding in 4k");
+    // }
+
+
+    public String[] getNetworks() {
+        System.out.println("Getting List of Networks");
+        String[] networkList = { "Harry", "Prashanth", "Anjali5G" };
+        return networkList;
+    }
+
+    public void connectToNetwork(String network) {
+        System.out.println("Connecting to " + network);
+    }
+}
+
+public class java_56 {
+    public static void main(String[] args) 
+    {
+        MySmartPhone ms = new MySmartPhone();
+        
+        ms.record4KVideo();
+        String[] ar = ms.getNetworks();
+        
+        for (String item : ar) {
+            System.out.println(item);
+        }
+    }
+}
